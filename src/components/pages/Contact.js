@@ -1,28 +1,27 @@
 import React, { useState } from "react";
 import "../../assets/stylesheet.css";
+import {validateEmail} from '../../utils/helpers'
 
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const emailChange = document.querySelector("#emailInput");
-  var matcher = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+  const [comment,setComment] = useState("");
 
   const handleInputChange = (e) => {
     // Getting the value and name of the input which triggered the change
-    const { name, value } = e.target;
+    const { name, value, comment } = e.target;
 
     // Ternary statement that will call either setFirstName or setLastName based on what field the user is typing in
-    return name === "firstName" ? setName(value) : setEmail(value);
+    return name === 'firstName' ? setName(value) : setEmail(value);
   };
 
   const handleFormSubmit = (e) => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     e.preventDefault();
 
-    // Alert the user their first and last name, clear the inputs
-    // alert(`Hello ${firstName} ${lastName}`);
     setName("");
     setEmail("");
+    setComment("");
   };
 
   return (
@@ -30,14 +29,13 @@ export default function Contact() {
       <h1>Contact Page</h1>
       <p>
         <div>
-          <p>Hello {name}</p>
           <form className="form">
             <input
               value={name}
               name="firstName"
               onChange={handleInputChange}
               type="text"
-              placeholder="First Name"
+              placeholder="Name"
             />
             <input
               value={email}
@@ -45,7 +43,15 @@ export default function Contact() {
               id="emailInput"
               onChange={handleInputChange}
               type="text"
-              placeholder="email"
+              placeholder="Email"
+            />
+            <input
+              value={comment}
+              name="comment"
+              id="commentInput"
+              onChange={handleInputChange}
+              type="text"
+              placeholder="Comment"
             />
             <p id="response"></p>
             <button type="button" onClick={handleFormSubmit}>
